@@ -61,8 +61,8 @@ async function sendMessage(){
     var information = [message, location]
 
     // send information and location as a get request
-    
-
 
 
 }
+
+getLocation(); 
