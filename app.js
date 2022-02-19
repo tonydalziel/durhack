@@ -46,7 +46,7 @@ app.post('/retrieveIsland', function (req, resp) {
       }
 
 
-      mapKey = location.toString()+islandsInfo.toString()
+      mapKey = location.toString()+"?"+islandsInfo.toString()+"?";
 
 
 
