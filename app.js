@@ -30,7 +30,8 @@ app.post('/retrieveIsland', function (req, resp) {
   findLocation = `SELECT * FROM islands WHERE locationName = "${location}"`;
   db.query(findLocation,(err,result)=>{
     if(err) throw err;
-    if(result == []){
+    resultKeys = Object.keys(result)
+    if(resultKeys.length == 0){
       //Create a new island
       //Generate map key here and set it equal to mapKey
       let mapKey; 
@@ -40,32 +41,27 @@ app.post('/retrieveIsland', function (req, resp) {
       islandInfo = []
       
       noOfIslands = Math.floor(Math.random() * (6 - 3) ) + 3;
-
-      for (let i = 0; i < noOfIslands.length; i++) {
-        islandInfo.append([Math.floor(Math.random() * (120 - 80) ) +80,Math.floor(Math.random() * (10 - 7) ) + 7])
+      for (let i = 0; i < noOfIslands; i++) {
+        console.log('again')
+        islandInfo.push([Math.floor(Math.random() * (120 - 80) ) +80,Math.floor(Math.random() * (10 - 7) ) + 7])
       }
-
-
-      mapKey = location.toString()+"?"+islandsInfo.toString()+"?";
-
-
-
+      mapKey = location+"?"+JSON.stringify(islandInfo)+"?";
       var today = new Date();  
       var accessed = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      setOfValues = [[accessed,location,mapKey]]
-      var createIsland = "INSERT INTO islands (lastAccessed, locationName, mapKey) VALUES ?";
-      db.query(createIsland, setOfValues, function (err, result) {
+      var createIsland = `INSERT INTO islands (lastAccessed, locationName, mapKey) VALUES ("${accessed}","${location}","${mapKey}")`;
+      console.log(createIsland)
+      db.query(createIsland, function (err, result) {
         if (err) throw err;
         console.log("Island inserted");
       });
-      console.log(setOfValues)
       findNewLocation = `SELECT * FROM islands WHERE locationName = "${location}"`;
-      db.query(findNewLocation,(err,result)=>{
+      db.query(findNewLocation,(err,newResult)=>{
         if(err) throw err;
-        resp.send(result[0]);
+        newResultKeys = Object.keys(newResult)
+        resp.send(newResult[newResultKeys[0]]);
       });
     }else{
-      resp.send(result[0])
+      resp.send(result[resultKeys[0]])
     }
   });
   // Process the location data here -> city name
