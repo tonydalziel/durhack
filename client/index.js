@@ -16,11 +16,10 @@ async function getLocation(){
         var placeNameReadable = await placeNameRaw.results[0].formatted_address;
         var placeName = await placeNameReadable.substring(0, placeNameReadable.indexOf(','));
         var bodyString = JSON.stringify({'name' : placeName})
-        var bodyParsed = JSON.parse(bodyString)
         fetch("http://127.0.0.1:8090/retrieveIsland", {
             method: "POST",
             headers: {'Content-Type': 'application/json'}, 
-            body: bodyParsed
+            body: bodyString
             }).then(res => {
             console.log("Request complete! response:", res);
         });

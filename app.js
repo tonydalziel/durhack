@@ -21,24 +21,32 @@ db.connect((err)=>{
   console.log('MySql Connected...')
 });
 
-// db.query(sqlTwo,(err,result)=>{
-//   if(err) throw err;
-//   console.log(result);
-// });
-
 
 app.post('/retrieveIsland', function (req, resp) { 
   if (typeof req.body === 'undefined') {
     resp.status(400).end();
   }
   const location = req.body.name;
-  console.log(location)
-  // WHERE locationName = '${location}'
-  // findLocation = `SELECT * FROM 'islands';`;
-  // db.query(findLocation,(err,result)=>{
-  //   if(err) throw err;
-  //   console.log(result);
-  // });
+  findLocation = `SELECT * FROM islands WHERE locationName = "${location}"`;
+  db.query(findLocation,(err,result)=>{
+    if(err) throw err;
+    if(result == []){
+      //Create a new island
+      //Generate map key here and set it equal to mapKey
+      var today = new Date();  
+      var accessed = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      setOfValues = [[accessed,location,mapKey]]
+      var createIsland = "INSERT INTO islands (lastAccessed, locationName, mapKey) VALUES ?";
+      db.query(createIsland, setOfValues, function (err, result) {
+        if (err) throw err;
+        console.log("Island inserted");
+      });
+      console.log(setOfValues)
+      //Should return
+    }else{
+      
+    }
+  });
   // Process the location data here -> city name
   // Cross reference with the database 
   // Return information from the database about the island and format correclty for the front end
