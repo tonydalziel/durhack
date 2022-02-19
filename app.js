@@ -33,6 +33,23 @@ app.post('/retrieveIsland', function (req, resp) {
     if(result == []){
       //Create a new island
       //Generate map key here and set it equal to mapKey
+      let mapKey; 
+      //mapKey format = islandName? islandInfo - islandInfo = l1 = [l2=[r,],[]]
+      
+      //gen island info 
+      islandInfo = []
+      
+      noOfIslands = Math.floor(Math.random() * (6 - 3) ) + 3;
+
+      for (let i = 0; i < noOfIslands.length; i++) {
+        islandInfo.append([Math.floor(Math.random() * (120 - 80) ) +80,Math.floor(Math.random() * (10 - 7) ) + 7])
+      }
+
+
+      mapKey = location.toString()+"?"+islandsInfo.toString()+"?";
+
+
+
       var today = new Date();  
       var accessed = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       setOfValues = [[accessed,location,mapKey]]
