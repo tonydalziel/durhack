@@ -65,4 +65,4 @@ async function sendMessage(){
 
 }
 
-getLocation(); 
+getIslandObject(); 
