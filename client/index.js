@@ -1,5 +1,7 @@
 // this function returns the name of the users location
 
+var flag = false
+
 async function getLocation(){
 
     navigator.geolocation.getCurrentPosition(success, error)
@@ -22,7 +24,9 @@ async function getLocation(){
 
         var placeName = await placeNameReadable.substring(0, placeNameReadable.indexOf(','));
 
-        return placeName;
+        var demo = document.getElementById("demo")
+        demo.innerHTML = await placeName
+        flag = true
 
     }
         
@@ -37,9 +41,14 @@ async function getLocation(){
 
 async function getIslandObject(){
 
-    let location = await getLocation();
+    getLocation()
 
     
+    
+    
+
+    /*
+
     fetch("http://127.0.0.1:8090/", {
         method: "POST",
         headers: {'Content-Type': 'application/json'}, 
@@ -47,6 +56,8 @@ async function getIslandObject(){
         }).then(res => {
         console.log("Request complete! response:", res);
     });
+
+    */
 
 
 }
@@ -62,7 +73,6 @@ async function sendMessage(){
 
     // send information and location as a get request
 
-
 }
 
-getIslandObject(); 
+getIslandObject();
