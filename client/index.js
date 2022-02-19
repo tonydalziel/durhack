@@ -57,27 +57,18 @@ async function getIslandObject(){
 
     if (typeof location != "object"){
 
-        console.log(location)
-
         setTimeout(getIslandObject, 250)
     }
     else {
 
-        console.log(location)
-
         await fetch("http://127.0.0.1:8090/retrieveIsland", {
             method: "POST",
             headers: {'Content-Type': 'application/json'}, 
-            body: location
-            }).then(res => {
-
-                var islandObject = res;
-
-                var islandID = islandObject.islandID;
-                var mapKey = islandObject.mapKey;
-
-                // pass into alex's function 
-
+            body: JSON.stringify(location)
+            }).then(response => response.json())
+            .then(data => {
+                islandID = data.islandID;
+                return data.mapKey;
             });
         }
 }

@@ -39,7 +39,7 @@ function preload() {
 //   glassSound = loadSound('assets/glass_sound.mp3')
 }
 
-
+let mapKey = get
 
 
 let mapKey = "Durham?[[200,5],[120,9],[300,6]]?" //await fetch map key 
