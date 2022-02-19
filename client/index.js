@@ -11,9 +11,6 @@ function getLocation(){
         var latitude = crd.latitude;
         var longitude = crd.longitude;
 
-        latitude = 51.593819;
-        longitude = -0.382170;
-
         var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&result_type=locality&key=AIzaSyCdxX__INpgk8QDC2jDfyAF-BtVMGaO-sA"
 
         console.log(url);
@@ -21,7 +18,17 @@ function getLocation(){
         fetch(url).then(function(response) {
             return response.json();
           }).then(function(data) {
-            console.log(data);
+            var placeNameRaw = data.results[0].formatted_address; 
+            var placeName = placeNameRaw.substring(0, placeNameRaw.indexOf(','));
+
+            // now we make a get request using our place name
+
+            
+
+
+
+
+
           }).catch(function() {
             console.log("somethings not working");
           });
@@ -35,5 +42,3 @@ function getLocation(){
 
     }
 }
-
-getLocation();
