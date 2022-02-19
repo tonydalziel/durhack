@@ -1,10 +1,10 @@
-// this function returns the latitude and logitude of the users location
+// this function returns the name of the users location
 
-function getLocation(){
+async function getLocation(){
 
     navigator.geolocation.getCurrentPosition(success, error)
 
-    function success(pos) {
+    async function success(pos) {
 
         var crd = pos.coords;
         
@@ -13,32 +13,56 @@ function getLocation(){
 
         var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&result_type=locality&key=AIzaSyCdxX__INpgk8QDC2jDfyAF-BtVMGaO-sA"
 
-        console.log(url);
 
-        fetch(url).then(function(response) {
-            return response.json();
-          }).then(function(data) {
-            var placeNameRaw = data.results[0].formatted_address; 
-            var placeName = placeNameRaw.substring(0, placeNameRaw.indexOf(','));
+        let response = await fetch(url)
+        let responseJSON = await response.text()
 
-            // now we make a get request using our place name
+        var placeNameRaw = await JSON.parse(responseJSON)
+        var placeNameReadable = await placeNameRaw.results[0].formatted_address; 
 
-            
+        var placeName = await placeNameReadable.substring(0, placeNameReadable.indexOf(','));
 
+        return placeName;
 
-
-
-
-          }).catch(function() {
-            console.log("somethings not working");
-          });
-
-        
     }
         
-    function error(err) {
+    async function error(err) {
 
         console.warn(`ERROR(${err.code}): ${err.message}`);
 
     }
+}
+
+// this function makes a post request with the users location, it recieves the island object
+
+async function getIslandObject(){
+
+    let location = await getLocation();
+
+    
+    fetch("http://127.0.0.1:8090/", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify(location)
+        }).then(res => {
+        console.log("Request complete! response:", res);
+    });
+
+
+}
+
+async function sendMessage(){
+
+    let location = await getLocation();
+
+    var messageField = document.getElementById("message");
+    var message = messageField.innerText();
+
+    var information = [message, location]
+
+    // send information and location as a get request
+    
+
+
+
 }
