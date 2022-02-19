@@ -1,11 +1,6 @@
 // this function returns the name of the users location
-
 async function getLocation(){
-
-    navigator.geolocation.getCurrentPosition(success, error)
-
     async function success(pos) {
-
         var crd = pos.coords;
         
         var latitude = crd.latitude;
@@ -18,38 +13,28 @@ async function getLocation(){
         let responseJSON = await response.text()
 
         var placeNameRaw = await JSON.parse(responseJSON)
-        var placeNameReadable = await placeNameRaw.results[0].formatted_address; 
-
+        var placeNameReadable = await placeNameRaw.results[0].formatted_address;
         var placeName = await placeNameReadable.substring(0, placeNameReadable.indexOf(','));
-
-        return placeName;
-
+        var bodyString = JSON.stringify({'name' : placeName})
+        var bodyParsed = JSON.parse(bodyString)
+        fetch("http://127.0.0.1:8090/retrieveIsland", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'}, 
+            body: bodyParsed
+            }).then(res => {
+            console.log("Request complete! response:", res);
+        });
     }
         
-    async function error(err) {
+    function error(err) {
 
         console.warn(`ERROR(${err.code}): ${err.message}`);
 
     }
+    navigator.geolocation.getCurrentPosition(success,error);
 }
 
 // this function makes a post request with the users location, it recieves the island object
-
-async function getIslandObject(){
-
-    let location = await getLocation();
-
-    
-    fetch("http://127.0.0.1:8090/", {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify(location)
-        }).then(res => {
-        console.log("Request complete! response:", res);
-    });
-
-
-}
 
 async function sendMessage(){
 
@@ -65,4 +50,4 @@ async function sendMessage(){
 
 }
 
-getIslandObject(); 
+getLocation();
