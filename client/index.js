@@ -46,7 +46,6 @@ async function sendMessage(){
 
     // send information and location as a get request
 
-
 }
 
 getLocation();
