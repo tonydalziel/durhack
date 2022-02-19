@@ -43,12 +43,6 @@ async function generate(){
         var placeNameReadable = await placeNameRaw.results[0].formatted_address;
         var placeName = await placeNameReadable.substring(0, placeNameReadable.indexOf(','));
         var bodyString = JSON.stringify({'name' : placeName})
-<<<<<<< Updated upstream
-        fetch("http://127.0.0.1:8090/retrieveIsland", {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'}, 
-            body: bodyString
-=======
         var bodyParsed = JSON.parse(bodyString)
 
 
@@ -76,7 +70,6 @@ async function getIslandObject(){
             method: "POST",
             headers: {'Content-Type': 'application/json'}, 
             body: location
->>>>>>> Stashed changes
             }).then(res => {
 
                 var islandObject = res;
@@ -105,17 +98,4 @@ async function sendMessage(){
 
 }
 
-<<<<<<< Updated upstream
-//getLocation();
-
-var bodyString = JSON.stringify({'name' : 'Durham'})
-fetch("http://127.0.0.1:8090/retrieveIsland", {
-    method: "POST",
-    headers: {'Content-Type': 'application/json'}, 
-    body: bodyString
-    }).then(res => {
-    console.log("Request complete! response:", res);
-});
-=======
 getIslandObject();
->>>>>>> Stashed changes
