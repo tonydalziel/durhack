@@ -1,5 +1,4 @@
 // this function obtains the name of the users location and makes a post request which returns the islandObject
-
 navigator.geolocation.getCurrentPosition(success,error);
 
 var coordinates = []
@@ -83,19 +82,5 @@ async function getIslandObject(){
         }
 }
 
-
-
-async function sendMessage(){
-
-    let location = await getLocation();
-
-    var messageField = document.getElementById("message");
-    var message = messageField.innerText();
-
-    var information = [message, location]
-
-    // send information and location as a get request
-
-}
 
 getIslandObject();
