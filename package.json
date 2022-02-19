@@ -1,0 +1,28 @@
+{
+  "name": "durhack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonydalziel/durhack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tonydalziel/durhack/issues"
+  },
+  "homepage": "https://github.com/tonydalziel/durhack#readme",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "expres": "^0.0.5",
+    "express": "^4.17.3",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15"
+  }
+}
