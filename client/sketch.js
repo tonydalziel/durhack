@@ -35,6 +35,7 @@ function preload() {
   myFont = loadFont('assets/upheavtt.ttf');
   shark = loadImage('assets/sharkfin.png');
   bottle = loadImage('assets/bottle.png')
+  button = loadImage('assets/icon.png')
 //   glassSound = loadSound('assets/glass_sound.mp3')
 }
 
@@ -77,9 +78,9 @@ function setup() {
   cloudy = 100;
 
   islandColour = color(255, 247, 153)
-  console.log(islands)
+
  //each island has a size int and a points int
-  console.log(islands)
+
   //Gen x and y coord for bottles 
 for (index = 0; index < bottles.length; index++) {
     rx = Math.floor(Math.random() * 200);
@@ -110,6 +111,7 @@ function draw() {
   
   
   
+  
   for (index = 0; index < bottles.length; index++) {
     x = bottles[index].x
     y = bottles[index].y
@@ -127,7 +129,7 @@ function draw() {
   makeCloud(cloudx + 400, cloudy + 100)
   makeCloud(cloudx - 50, cloudy + 100)
   makeCloud(cloudx +70, cloudy + 300)
-  cloudx+=0.05;
+  cloudx+=0.1;
   sharkX += 0.02
 
 
@@ -138,6 +140,9 @@ function draw() {
   text("BREAK THIS BOTTLE",width/2,height-height+50)
   textSize(20);
   text("A messaging web app (kind of)",width/2+100,height-height+70)
+
+  image(button,width/2 ,height-200,180,200)
+
   
 
  
@@ -161,6 +166,13 @@ function mouseClicked(){
     
   }
   
+  buttonX = width/2
+  buttonY = height-200
+  if ((buttonX-50 <= mouseX && mouseX <= buttonX+200) && (buttonY-50 <= mouseY && mouseY <= buttonY+200)){
+    
+    noLoop();
+  }
+
  
 }
 
