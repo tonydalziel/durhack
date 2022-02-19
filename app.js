@@ -42,9 +42,13 @@ app.post('/retrieveIsland', function (req, resp) {
         console.log("Island inserted");
       });
       console.log(setOfValues)
-      //Should return
+      findNewLocation = `SELECT * FROM islands WHERE locationName = "${location}"`;
+      db.query(findNewLocation,(err,result)=>{
+        if(err) throw err;
+        resp.send(result[0]);
+      });
     }else{
-      
+      resp.send(result[0])
     }
   });
   // Process the location data here -> city name
@@ -63,12 +67,17 @@ app.get('/washedUpBottles', function (req, resp) {
   if (typeof req.query.islandId === 'undefined') {
     resp.status(400).end();
   }
-  islandId = req.query.islandId
+  islandId = req.query.islandId;
+  retrieveBottles = `SELECT bottleId FROM bottles WHERE islandID = "${islandId}"`;
+  db.query(retrieveBottles,(err,result)=>{
+    if(err) throw err;
+    resp.send(result);
+  });
   //Search through database for bottles washed up
   //Return list of bottleID's
 });
 
-//POST location, new message -> Message sent (would need UserID if we implement users)
+//POST new message -> Message sent (would need UserID if we implement users)
 //Maybe message people that have recently visited that island -> Use logins
 app.post('/sendMessage', function (req, resp) {
   if (typeof req.body.message === 'undefined') {
