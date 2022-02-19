@@ -1,3 +1,8 @@
+
+
+
+
+
 //Vars to declare (might be in a key)
 let cloudx;
 let cloudy;
@@ -6,8 +11,8 @@ let isShark;
 let sharkSpeed;
 let sharkX = 400;
 
+let glassSound;
 
-let bottles = [{id:1},{id:2},{id:3}] //list of bottles with id
 
 
 
@@ -30,11 +35,34 @@ function preload() {
   myFont = loadFont('assets/upheavtt.ttf');
   shark = loadImage('assets/sharkfin.png');
   bottle = loadImage('assets/bottle.png')
+//   glassSound = loadSound('assets/glass_sound.mp3')
 }
 
 
 
 
+let mapKey = "Durham?[[200,5],[120,9],[300,6]]?" //await fetch map key 
+let bottles = [{id:1},{id:2},{id:3}] //list of bottles with id await get bottles
+
+part1 = true
+//Decode map key
+for (let i = 0; i < mapKey.length; i++) {
+
+    if (mapKey[i] === "?"){
+        if (part1){
+            islandName = mapKey.substring(0, i);
+            part1 = false;
+        } else{
+            islands = mapKey.substring(islandName.length+1,mapKey.length-1)
+
+        }
+       
+    }
+
+
+}
+
+islands = eval(islands)
 
 
 
@@ -44,14 +72,14 @@ function setup() {
   
   isShark = true
   sharkSpeed = 0.3
-  islandName = "Durham"
   
   cloudx = 100;
   cloudy = 100;
 
   islandColour = color(255, 247, 153)
-  islands = [[70,10],[100,8],[130,10]] //each island has a size int and a points int
-  
+  console.log(islands)
+ //each island has a size int and a points int
+  console.log(islands)
   //Gen x and y coord for bottles 
 for (index = 0; index < bottles.length; index++) {
     rx = Math.floor(Math.random() * 200);
@@ -80,14 +108,15 @@ function draw() {
   islandText(islandName)
   
   
+  
+  
   for (index = 0; index < bottles.length; index++) {
     x = bottles[index].x
     y = bottles[index].y
     image(bottle,x,y,100,100)
     
     
-    
-  
+
     
 }
   
@@ -100,8 +129,17 @@ function draw() {
   makeCloud(cloudx +70, cloudy + 300)
   cloudx+=0.05;
   sharkX += 0.02
+
+
+  fill(255)
+  textFont(myFont);
+  textSize(60);
+  textAlign(CENTER);
+  text("BREAK THIS BOTTLE",width/2,height-height+50)
+  textSize(20);
+  text("A messaging web app (kind of)",width/2+100,height-height+70)
   
-  
+
  
 }
 
@@ -115,6 +153,7 @@ function mouseClicked(){
     if ((x-70 <= mouseX && mouseX <= x+70) && (y-70 <= mouseY && mouseY <= y+70)){
       
       bottles.splice(index, 1);
+    //   glassSound.play()
       //OPEN BOTTLE FUNCTION
       break
     }
