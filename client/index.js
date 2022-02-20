@@ -70,6 +70,17 @@ async function getIslandObject(){
             }).then(response => response.json())
             .then(data => {
                 islandID = data.islandID;
+                //Make function here to get the bottles list
+                // let response = await fetch("http://127.0.0.1:8090/washedUpBottles?islandId="+islandID)
+                // let responseJSON = await response.text()
+                // var placeNameRaw = await JSON.parse(responseJSON)
+                // var placeNameReadable = await placeNameRaw.results[0].formatted_address;
+                // var placeName = await placeNameReadable.substring(0, placeNameReadable.indexOf(','));
+                // var bodyString = JSON.stringify({'name' : placeName})
+                // var bodyParsed = JSON.parse(bodyString)
+
+
+                // return bodyParsed;
                 function returnMapKey(){
                     if(typeof data.mapKey != 'string'){
                         setTimeout(() => {
@@ -87,24 +98,3 @@ async function getIslandObject(){
         }
 }
 
-<<<<<<< Updated upstream
-=======
-async function submitMessage(){
-
-    message = document.getElementById("messageID").value
-    document.getElementById("messageID").value = ''
-    console.log(message)
-
-    // then just send this message to wherever you need it
-    await fetch("", {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'}, 
-            body: message
-            }).then(res => {
-
-            });
-
-}
-
-getIslandObject();
->>>>>>> Stashed changes
