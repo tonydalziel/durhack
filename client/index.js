@@ -87,3 +87,24 @@ async function getIslandObject(){
         }
 }
 
+<<<<<<< Updated upstream
+=======
+async function submitMessage(){
+
+    message = document.getElementById("messageID").value
+    document.getElementById("messageID").value = ''
+    console.log(message)
+
+    // then just send this message to wherever you need it
+    await fetch("", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'}, 
+            body: message
+            }).then(res => {
+
+            });
+
+}
+
+getIslandObject();
+>>>>>>> Stashed changes
