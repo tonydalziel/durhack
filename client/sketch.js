@@ -43,25 +43,13 @@ function preload() {
 
 
 let mapKey = "Durham?[[200,5],[120,9],[300,6]]?" //await fetch map key 
+let testMapKey;
+getIslandObject()
+
+
+
 let bottles = [{id:1},{id:2},{id:3}] //list of bottles with id await get bottles
 
-part1 = true
-//Decode map key
-for (let i = 0; i < mapKey.length; i++) {
-
-    if (mapKey[i] === "?"){
-        if (part1){
-            islandName = mapKey.substring(0, i);
-            part1 = false;
-        } else{
-            islands = mapKey.substring(islandName.length+1,mapKey.length-1)
-
-        }
-       
-    }
-
-
-}
 
 islands = eval(islands)
 
@@ -88,6 +76,9 @@ for (index = 0; index < bottles.length; index++) {
     bottles[index].x = width/2+rx
     bottles[index].y = height/2-ry
 }
+
+
+
   
 
  
@@ -95,57 +86,85 @@ for (index = 0; index < bottles.length; index++) {
 }
 
 function draw() {
+  if (testMapKey !== undefined){
+    mapKey = testMapKey
+    updateVars()
+   
+    drawSea(color(90, 151, 250)) //Sea color will be random
+    if (isShark){
+      
+      sharkX -= sharkSpeed
+      let sharkY = -sharkX
+      
+      image(shark, sharkX, 10, 30,30)
+      
+    }
+    drawIsland(islandColour,200,5) //Island size, island points
+    islandText(islandName)
+    
+    
+    
+    
+    
+    for (index = 0; index < bottles.length; index++) {
+      x = bottles[index].x
+      y = bottles[index].y
+      image(bottle,x,y,100,100)
+      
+      
 
-  drawSea(color(90, 151, 250)) //Sea color will be random
-  if (isShark){
-    
-    sharkX -= sharkSpeed
-    let sharkY = -sharkX
-    
-    image(shark, sharkX, 10, 30,30)
-    
+      
   }
-  drawIsland(islandColour,200,5) //Island size, island points
-  islandText(islandName)
-  
-  
-  
-  
-  
-  for (index = 0; index < bottles.length; index++) {
-    x = bottles[index].x
-    y = bottles[index].y
-    image(bottle,x,y,100,100)
     
     
-
     
-}
-  
-  
-  
-  makeCloud(cloudx, cloudy-50);
-  makeCloud(cloudx - 100, cloudy + 100)
-  makeCloud(cloudx + 400, cloudy + 100)
-  makeCloud(cloudx - 50, cloudy + 100)
-  makeCloud(cloudx +70, cloudy + 300)
-  cloudx+=0.1;
-  sharkX += 0.02
+    makeCloud(cloudx, cloudy-50);
+    makeCloud(cloudx - 100, cloudy + 100)
+    makeCloud(cloudx + 400, cloudy + 100)
+    makeCloud(cloudx - 50, cloudy + 100)
+    makeCloud(cloudx +70, cloudy + 300)
+    cloudx+=0.1;
+    sharkX += 0.02
 
 
-  fill(255)
-  textFont(myFont);
-  textSize(60);
-  textAlign(CENTER);
-  text("BREAK THIS BOTTLE",width/2,height-height+50)
-  textSize(20);
-  text("A messaging web app (kind of)",width/2+100,height-height+70)
+    fill(255)
+    textFont(myFont);
+    textSize(60);
+    textAlign(CENTER);
+    text("BREAK THIS BOTTLE",width/2,height-height+50)
+    textSize(20);
+    text("A messaging web app (kind of)",width/2+100,height-height+70)
 
-  image(button,width/2 ,height-200,180,200)
-
-  
-
+    image(button,width/2 ,height-200,180,200)
+    
+    
+  } else{
+    console.log("loading")
+  }
  
+}
+
+function updateVars(){
+  part1 = true
+//Decode map key
+for (let i = 0; i < mapKey.length; i++) {
+
+    if (mapKey[i] === "?"){
+        if (part1){
+            islandName = mapKey.substring(0, i);
+            part1 = false;
+        } else{
+            islands = mapKey.substring(islandName.length+1,mapKey.length-1)
+            islands = eval(islands)
+
+        }
+       
+    }
+
+
+}
+
+
 }
 
 
@@ -190,7 +209,9 @@ function drawIsland(islandColor,islandSize,islandPoints){
   fill(islandColor)
   
   //Loop through islands
-  for (let i = 0; i < islands.length; i++) {
+  for (let i = 0; i < islands.length; i++) 
+  {
+  
     polygon(width/2+(i*50),height/2-(i*30),islands[i][0],islands[i][1])
   }
   

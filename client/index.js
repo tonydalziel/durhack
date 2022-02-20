@@ -1,3 +1,5 @@
+
+
 // this function obtains the name of the users location and makes a post request which returns the islandObject
 navigator.geolocation.getCurrentPosition(success,error);
 
@@ -68,10 +70,20 @@ async function getIslandObject(){
             }).then(response => response.json())
             .then(data => {
                 islandID = data.islandID;
-                return data.mapKey;
+                function returnMapKey(){
+                    if(typeof data.mapKey != 'string'){
+                        setTimeout(() => {
+                            returnMapKey()
+                        }, 250);
+                    }else{
+                        console.log(data.mapKey)
+                        testMapKey = data.mapKey
+                        return data.mapKey
+                    }
+                }
+              
+                return returnMapKey()
             });
         }
 }
 
-
-getIslandObject();
